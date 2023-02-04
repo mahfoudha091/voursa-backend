@@ -21,6 +21,12 @@ export class UsersController {
   
       return this.userService.findOne(id);
     }
+
+    @Get(':email')
+    findByEmail(@Param('email') email: string): Promise<User> {
+  
+      return this.userService.findByEmail(email);
+    }
   
     @Put(':id')
     update(@Param('id') id: number, @Body() userDto: UserDto): Promise<void> {

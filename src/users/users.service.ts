@@ -26,10 +26,15 @@ export class UsersService {
         return this.userRepository.find();
       }
     
-    findOne(id: number): Promise<User> {
+    findOne(id: any): Promise<User> {
 
         return this.userRepository.findOneBy({ id });
       }
+
+    findByEmail(email: string): Promise<User> {
+
+      return this.userRepository.findOneBy({ email });
+    }
     
     async update(id: number ,userDto: UserDto): Promise<void> {
        let  newUserDto =  new User()
@@ -37,6 +42,7 @@ export class UsersService {
             newUserDto.email = userDto.email;
             newUserDto.adress = userDto.adress;
             newUserDto.phone = userDto.phone;
+            newUserDto.password = userDto.password;
             
         await this.userRepository.update(id,newUserDto);
       
