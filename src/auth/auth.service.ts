@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt/dist';
+import { UserDto } from 'src/users/user-dto';
 import { User } from 'src/users/user.entity';
 import { UsersService } from 'src/users/users.service';
 import { LoginDto } from './login-dto';
@@ -9,25 +10,28 @@ export class AuthService {
     constructor(private jwtService: JwtService, private userService: UsersService){}
 
         async login(loginDto: LoginDto): Promise<any>{
-
             const user = await this.userService.findByEmail(loginDto.email);
-            
-            if(user.email == loginDto.email && user.password == loginDto.passowrd){
-                
-                return  this.sinUser(user.id,user.email,"user");
+            if(user.email == loginDto.email && user.password == loginDto.password){
+                console.log('done')
+                return {
+                  access_token: this.jwtService.sign({ sub:user.id, email:user.email,type:"User" } )
+                };
             }
             return 'not matched...';
 
-        }
-
-        sinUser(userId:number,email:string,type:string){
-            return this.jwtService.sign(
-                {
-                   sub:userId,
-                   email:email,
-                   type:type
-                }
-            );
-        }
+        } 
+        
+        
+        async register(userDto: UserDto): Promise<User>{
+          
+          //    const user = new User()
+          //    user.name = userDto.name;
+          //    user.email = userDto.email;
+          //    user.adress = userDto.adress;
+          //    user.phone = userDto.phone;
+             return await this.userService.create(userDto)
+          }
+        
+          
     
 }

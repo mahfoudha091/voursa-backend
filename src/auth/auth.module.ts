@@ -7,17 +7,23 @@ import { AuthService } from './auth.service';
 import { UsersService } from 'src/users/users.service';
 import { User } from 'src/users/user.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { jwtConstants } from './constants';
+import { PassportModule } from '@nestjs/passport';
+import { JwtStrategy } from './jwt.strategy';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([User]),
     UsersModule,
-    JwtModule.register({
-      secret: "supper-jwtConstants-secret-cat",
+    PassportModule,
+    JwtModule.register({ 
+      // secret: `${process.env.SECRET}`,
+      secret: `${process.env.SECRET}`|| jwtConstants.secret,
       signOptions: { expiresIn: '60s' },
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService,UsersService,JwtService]
+  providers: [AuthService,UsersService,JwtService,JwtStrategy],
+  // exports:[AuthService]
 })
 export class AuthModule {}
