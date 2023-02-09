@@ -22,7 +22,7 @@ dotenv.config();
       // secret: process.env.SECRET,
       secret: 'SECRET_KEY_IS_HERE',
       // secret: `${process.env.SECRET}`|| jwtConstants.secret,
-      signOptions: { expiresIn: '60s' },
+      signOptions: { expiresIn: '3600s' },
     }),
   ],
   controllers: [AuthController],

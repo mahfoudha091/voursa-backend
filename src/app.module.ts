@@ -7,11 +7,14 @@ import { TagsModule } from './tags/tags.module';
 import { UsersModule } from './users/users.module';
 import { User } from './users/user.entity';
 import { AuthModule } from './auth/auth.module';
+import { CategoriesModule } from './categories/categories.module';
+import { Category } from './categories/category.entity';
 
 @Module({
   imports: [
     ToolsModule,
     TagsModule,
+    CategoriesModule,
     UsersModule,
     AuthModule,
     TypeOrmModule.forRoot({
@@ -21,7 +24,7 @@ import { AuthModule } from './auth/auth.module';
       username: 'root',
       password: '',
       database: 'nest_db',
-      entities: [Tool,Tag,User],
+      entities: [Tool,Tag,User,Category],
       // entities: [__dirname + './**/*.entity{.ts,.js}'],
       synchronize: true,
       autoLoadEntities: true,

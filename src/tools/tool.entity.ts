@@ -1,4 +1,7 @@
-import {Entity, BaseEntity, PrimaryGeneratedColumn, Column} from "typeorm"
+import { Category } from "src/categories/category.entity";
+import { Tag } from "src/tags/tag.entity";
+import { User } from "src/users/user.entity";
+import {Entity, BaseEntity, PrimaryGeneratedColumn, Column, ManyToOne, ManyToMany, JoinTable} from "typeorm"
 @Entity({name:'tools'})
 export class Tool extends BaseEntity {
     @PrimaryGeneratedColumn()
@@ -13,14 +16,16 @@ export class Tool extends BaseEntity {
     @Column()
     price:number;
 
-    // @Column()
-    // user_id:number;
+    @ManyToOne(() => User, (user) => user.tools)
+    user: User
 
-    // @Column()
-    // tags:[];
+    @ManyToMany(() => Tag, (tag) => tag.tools)
+    @JoinTable()
+    tags: Tag[]
 
-    // @Column()
-    // categories:[];
+    @ManyToMany(() => Category, (category) => category.tools)
+    @JoinTable()
+    categories: Category[]
 
     // @Column()
     // images:[];

@@ -1,4 +1,5 @@
-import {Entity, BaseEntity, PrimaryGeneratedColumn, Column} from "typeorm"
+import { Tool } from "src/tools/tool.entity";
+import {Entity, BaseEntity, PrimaryGeneratedColumn, Column, OneToMany} from "typeorm"
 @Entity({name:'users'})
 export class User extends BaseEntity {
     @PrimaryGeneratedColumn()
@@ -18,6 +19,9 @@ export class User extends BaseEntity {
 
     @Column()
     phone:string;
+
+    @OneToMany(type => Tool, tool => tool.user)
+    tools: Tool[];
 
     
 
