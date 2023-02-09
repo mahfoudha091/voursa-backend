@@ -8,6 +8,7 @@ export class AuthController {
     constructor(private authService: AuthService){}
     @Post()
     async login(@Request() req) {
+      console.log(`${process.env.SECRET}`)
         return this.authService.login(req.body);
       }
 

@@ -1,3 +1,5 @@
+import * as dotenv from 'dotenv';
+dotenv.config();
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt/dist';
 import { UserDto } from 'src/users/user-dto';
@@ -10,11 +12,12 @@ export class AuthService {
     constructor(private jwtService: JwtService, private userService: UsersService){}
 
         async login(loginDto: LoginDto): Promise<any>{
+          console.log(this.jwtService);
             const user = await this.userService.findByEmail(loginDto.email);
+              
             if(user.email == loginDto.email && user.password == loginDto.password){
-                console.log('done')
                 return {
-                  access_token: this.jwtService.sign({ sub:user.id, email:user.email,type:"User" } )
+                  access_token: this.jwtService.sign({ sub:user.id, email:user.email,type:"User"  }, { secret: process.env.SECRET})
                 };
             }
             return 'not matched...';
